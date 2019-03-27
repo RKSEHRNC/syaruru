@@ -290,23 +290,66 @@ void Enemy01::OnShow() {
 	pic.ShowBitmap();
 }
 
+///////////////////////
+// button by17
+///////////////////////
+int Button::getX() {
+	return x;
+}
+
+int Button::getY() {
+	return y;
+}
+
 
 //////////////////////////////////////////
 // 這裡是弩炮按鈕的物件 by17
 //////////////////////////////////////////
 
-Button::Button(){
+Button_ballitsa::Button_ballitsa(){
 	x = 500;
 	y = 50;
 }
 
-void Button::LoadBitmap() {
-	pic.LoadBitmap("Bitmaps\\Button_ballista.bmp");
+void Button_ballitsa::LoadBitmap() {
+	pic.LoadBitmap("Bitmaps\\button_ballista.bmp");
 }
 
-void Button::OnShow() {
+void Button_ballitsa::OnShow() {
 	pic.SetTopLeft(x, y);
 	pic.ShowBitmap();
+}
+
+void Button_ballitsa::Click() {
+
+}
+
+
+//////////////////////////////////////////
+// 開始按鈕的物件 by17
+//////////////////////////////////////////
+
+Button_start::Button_start() {
+	x = 500;
+	y = 400;
+}
+
+void Button_start::LoadBitmap() {
+	pic.LoadBitmap("Bitmaps\\button_start.bmp");
+}
+
+void Button_start::OnShow() {
+	pic.SetTopLeft(x, y);
+	pic.ShowBitmap();
+}
+
+void Button_start::OnMove(int x1, int y1) {
+	x = x1;
+	y = y1;
+}
+
+void Button_start::Click() {
+	x = x - 10;
 }
 
 
@@ -384,6 +427,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動彈跳的球
 	//
 	bball.OnMove();
+	eraser.OnMove();
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -415,6 +459,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	corner.ShowBitmap(background);							// 將corner貼到background
 	enemy01.LoadBitmap();
 	Button_Ballitsa.LoadBitmap();
+	Button_Start.LoadBitmap();
 	bball.LoadBitmap();										// 載入圖形
 	hits_left.LoadBitmap();									
 	CAudio::Instance()->Load(AUDIO_DING,  "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
@@ -457,30 +502,25 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingDown(false);
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+bool CGameStateRun::Onclick(CPoint p, Button b) {
+	GetCursorPos(&p);
+	return (p.x >500);
+}
+//p.x > b.getX() && p.y > b.getY() && (b.getX() + 140) > p.x && (b.getY() + 80) > p.y
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下)
 {
-	eraser.SetMovingLeft(true);
+	GetCursorPos(& point);
+	Button_Start.OnMove(point.x,point.y);
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
-{
-	eraser.SetMovingLeft(false);
-}
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	// 沒事。如果需要處理滑鼠移動的話，寫code在這裡
+	GetCursorPos(&point);
+	Button_Start.OnMove(point.x/10, point.y/10);
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
-{
-	eraser.SetMovingRight(true);
-}
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
-{
-	eraser.SetMovingRight(false);
-}
 
 void CGameStateRun::OnShow()
 {
@@ -507,6 +547,8 @@ void CGameStateRun::OnShow()
 	//  貼上選單 by17
 	menu.ShowBitmap();
 	Button_Ballitsa.OnShow();
+	Button_Start.OnShow();
+	//eraser.OnShow();
 
 }
 }

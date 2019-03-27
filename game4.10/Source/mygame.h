@@ -67,17 +67,41 @@ namespace game_framework {
 	};
 
 	///////////////////////////////////
-	// 建立弩炮的按鈕物件 by17
+	// 建立按鈕物件 by17
 	///////////////////////////////////
+
 	class Button {
 	public:
-		Button();
+		int getX();
+		int getY();
+	private:
+		int x, y;
+	};
+
+	class Button_ballitsa : public Button { //弩炮按鈕
+	public:
+		Button_ballitsa();
 		void LoadBitmap();
 		void OnShow();
+		void Click();
 	private:
 		CMovingBitmap pic;
 		int x, y;
 	};
+
+	class Button_start : public Button { //開始按鈕
+	public:
+		Button_start();
+		void LoadBitmap();
+		void OnShow();
+		void OnMove(int x, int y);
+		void Click();
+	private:
+		CMovingBitmap pic;
+		int x, y;
+	};
+
+
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
@@ -111,10 +135,8 @@ namespace game_framework {
 		void OnKeyDown(UINT, UINT, UINT);
 		void OnKeyUp(UINT, UINT, UINT);
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnLButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
-		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+		bool Onclick(CPoint p, Button B); //判斷點擊時的滑鼠位子
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -129,8 +151,8 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 		Enemy01 enemy01;			//敵人物件
-		Button Button_Ballitsa;		//弩炮按鈕
-		Button Button_Start;		//開始按鈕
+		Button_ballitsa Button_Ballitsa;		//弩炮按鈕
+		Button_start Button_Start;		//開始按鈕
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
