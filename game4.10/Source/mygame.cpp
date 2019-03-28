@@ -60,6 +60,7 @@
 #include "mygame.h"
 
 namespace game_framework {
+
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲開頭畫面物件
 /////////////////////////////////////////////////////////////////////////////
@@ -349,7 +350,7 @@ void Button_start::OnMove(int x1, int y1) {
 }
 
 void Button_start::Click() {
-	x = x - 10;
+	x = x-40;
 }
 
 
@@ -502,23 +503,27 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingDown(false);
 }
 
-bool CGameStateRun::Onclick(CPoint p, Button b) {
+bool CGameStateRun::Onclick(CPoint p, int y) {
+	HWND h = FindWindow(NULL, "game");
 	GetCursorPos(&p);
-	return (p.x >500);
+	ScreenToClient(h, &p);
+	return (500<p.x && p.x < 640 && y < (p.y-30) && (p.y-30) < (y+80));
 }
-//p.x > b.getX() && p.y > b.getY() && (b.getX() + 140) > p.x && (b.getY() + 80) > p.y
+
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下)
 {
-	GetCursorPos(& point);
-	Button_Start.OnMove(point.x,point.y);
+	if (Onclick(point, 400) == 1) {
+		Button_Start.Click();
+	}
+	
 }
 
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	GetCursorPos(&point);
-	Button_Start.OnMove(point.x/10, point.y/10);
+	
 }
+
 
 
 
