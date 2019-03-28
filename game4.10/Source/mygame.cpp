@@ -333,7 +333,7 @@ Button_ballitsa::Button_ballitsa(){
 }
 
 void Button_ballitsa::newballitsa(CPoint p) {
-	ballitsa = new Ballitsa(p);
+	*ballitsa = new Ballitsa(p);
 }
 
 void Button_ballitsa::LoadBitmap() {
