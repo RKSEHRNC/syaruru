@@ -72,7 +72,7 @@ namespace game_framework {
 
 	class Ballitsa {
 	public:
-		Ballitsa(CPoint p);
+		Ballitsa();
 		bool state = 0; //0 = 建造中, 1 = 建造完成
 		void LoadBitmap();
 		void OnShow();

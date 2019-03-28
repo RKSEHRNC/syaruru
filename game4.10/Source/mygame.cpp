@@ -295,9 +295,9 @@ void Enemy01::OnShow() {
 // 弩炮的物件 by17
 ///////////////////////////////////////////
 
-Ballitsa::Ballitsa(CPoint p) {
+Ballitsa::Ballitsa() {
 	pic.LoadBitmap("Bitmaps\\ballista.bmp", RGB(255, 255, 255));
-	pic.SetTopLeft(p.x - 20, p.y - 19);
+	//pic.SetTopLeft(p.x - 20, p.y - 19);
 }
 
 void Ballitsa::LoadBitmap() {
@@ -333,7 +333,7 @@ Button_ballitsa::Button_ballitsa(){
 }
 
 void Button_ballitsa::newballitsa(CPoint p) {
-	*ballitsa = new Ballitsa(p);
+	 ballitsa = new Ballitsa;
 }
 
 void Button_ballitsa::LoadBitmap() {
@@ -557,7 +557,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作(移動) by17
 {
 	if(buliding==1 && Button_Ballitsa.ballitsa->state == 0) 	Button_Ballitsa.ballitsa->OnMove(point);
-} //
+} 
 
 
 
