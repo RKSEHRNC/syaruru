@@ -66,6 +66,22 @@ namespace game_framework {
 		int x,y,state;
 	};
 
+	///////////////////////////////
+	//建立弩炮物件 by17
+	///////////////////////////////
+
+	class Ballitsa {
+	public:
+		Ballitsa(CPoint p);
+		bool state = 0; //0 = 建造中, 1 = 建造完成
+		void LoadBitmap();
+		void OnShow();
+		void OnMove(CPoint p);
+	private:
+		CMovingBitmap pic;
+		int x, y;
+	};
+
 	///////////////////////////////////
 	// 建立按鈕物件 by17
 	///////////////////////////////////
@@ -80,14 +96,16 @@ namespace game_framework {
 
 	class Button_ballitsa : public Button { //弩炮按鈕
 	public:
+		Ballitsa *ballitsa = NULL;
 		Button_ballitsa();
+		void newballitsa(CPoint p);
 		void LoadBitmap();
 		void OnShow();
 		void Click();
 		
 	private:
 		CMovingBitmap pic;
-		int x, y;
+		int x = 500, y = 50;
 	};
 
 	class Button_start : public Button { //開始按鈕
@@ -99,25 +117,10 @@ namespace game_framework {
 	private:
 		CMovingBitmap pic;
 		int x, y;
+		
 	};
 
-	///////////////////////////////
-	//建立弩炮物件 by17
-	///////////////////////////////
-
-	class Ballitsa {
-	public:
-		Ballitsa();
-		void LoadBitmap();
-		void OnShow();
-		void OnMove(CPoint p);
-	private:
-		CMovingBitmap pic;
-		int x, y;
-	};
-
-
-
+	
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -168,7 +171,7 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 		Enemy01			enemy01;	//敵人物件 by17
-		Ballitsa		ballitsa;	//弩炮 by17
+		//Ballitsa		ballitsa;	//弩炮 by17
 		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
 		Button_start	Button_Start;//開始按鈕 by17
 		bool			buliding = 0;//防禦塔建造中 by17
