@@ -191,7 +191,7 @@ Enemy01::Enemy01() {//建立
 	x = 47, y = -20, state = 1;
 }
 
-void Enemy01::OnMove(CGameStateRun G) {//移動
+void Enemy01::OnMove() {//移動
 
 	if (state == 1) { //向下
 		if (y <= 122) y += 3;
@@ -500,20 +500,20 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingDown(false);
 }
 
-bool CGameStateRun::ChangeRun() { //改變狀態
+bool CGameStateRun::ChangeRun() { //改變狀態 by17
 	ifRun = !ifRun;
 	return ifRun;
 }
 
 
-bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定
+bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定 by17
 	HWND h = FindWindow(NULL, "game");
 	GetCursorPos(&p);
 	ScreenToClient(h, &p);
 	return (500<p.x && p.x < 640 && y < (p.y-30) && (p.y-30) < (y+80));
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下)
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下) by17
 {
 	if (Onclick(point, 400) == 1) { //start
 		Button_Start.OnMove();
@@ -557,7 +557,7 @@ void CGameStateRun::OnShow()
 	Button_Ballitsa.OnShow();
 	Button_Start.OnShow();
 	//eraser.OnShow();
-	bball.OnShow();
+	//bball.OnShow();
 
 }
 }

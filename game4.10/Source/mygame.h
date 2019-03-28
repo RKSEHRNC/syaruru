@@ -59,7 +59,7 @@ namespace game_framework {
 	public:
 		Enemy01();
 		void LoadBitmap();
-		void OnMove(CGameStateRun G);
+		void OnMove();
 		void OnShow();
 	private:
 		CMovingBitmap  pic;

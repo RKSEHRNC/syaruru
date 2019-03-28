@@ -26,7 +26,7 @@ namespace game_framework {
 	{
 		//char *filename[4] = { ".\\bitmaps\\ball1.bmp","Bitmaps\\button_pause.bmp",".\\bitmaps\\ball3.bmp","Bitmaps\\button_start.bmp" };
 		//for (int i = 0; i < 4; i++)	// 載入動畫(由4張圖形構成)
-			animation.AddBitmap("Bitmaps\\button_pause.bmp");
+			//animation.AddBitmap("Bitmaps\\button_pause.bmp");
 			animation.AddBitmap("Bitmaps\\button_start.bmp");
 	}
 
