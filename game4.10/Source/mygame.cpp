@@ -349,6 +349,26 @@ void Button_start::OnMove() {
 
 }
 
+///////////////////////////////////////////
+// 弩炮的物件 by17
+///////////////////////////////////////////
+
+Ballitsa::Ballitsa() {
+	x = -200, y = -100;
+}
+
+void Ballitsa::LoadBitmap() {
+	pic.LoadBitmap("Bitmaps\\ballista.bmp",RGB(255,255,255));
+}
+
+void Ballitsa::OnShow() {
+	pic.ShowBitmap();
+}
+
+void Ballitsa::OnMove(CPoint p) {
+	pic.SetTopLeft(p.x-20, p.y-19);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
@@ -458,6 +478,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	enemy01.LoadBitmap();
 	Button_Ballitsa.LoadBitmap();
 	Button_Start.LoadBitmap();
+	ballitsa.LoadBitmap();
 	bball.LoadBitmap();										// 載入圖形
 	hits_left.LoadBitmap();									
 	CAudio::Instance()->Load(AUDIO_DING,  "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
@@ -514,17 +535,25 @@ bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定 by17
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下) by17
-{
-	if (Onclick(point, 400) == 1) { //start
+{	
+	if (Onclick(point, 50) == 1) { //弩炮
+		buliding = !buliding;
+		ballitsa.OnShow();
+	}
+	else if (buliding == 1&& point.x < 470) {
+		buliding = !buliding;
+	}
+	if (Onclick(point, 400) == 1) { //start / pause
 		Button_Start.OnMove();
 		this->ChangeRun();
 	} 
+	
 }
 
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作(移動) by17
 {
-	
+	if(buliding==1) 	ballitsa.OnMove(point);
 }
 
 
@@ -556,6 +585,7 @@ void CGameStateRun::OnShow()
 	menu.ShowBitmap();
 	Button_Ballitsa.OnShow();
 	Button_Start.OnShow();
+	//ballitsa.OnShow();
 	//eraser.OnShow();
 	//bball.OnShow();
 

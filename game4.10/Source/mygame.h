@@ -101,6 +101,21 @@ namespace game_framework {
 		int x, y;
 	};
 
+	///////////////////////////////
+	//建立弩炮物件 by17
+	///////////////////////////////
+
+	class Ballitsa {
+	public:
+		Ballitsa();
+		void LoadBitmap();
+		void OnShow();
+		void OnMove(CPoint p);
+	private:
+		CMovingBitmap pic;
+		int x, y;
+	};
+
 
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -153,8 +168,10 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 		Enemy01			enemy01;	//敵人物件 by17
+		Ballitsa		ballitsa;	//弩炮 by17
 		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
 		Button_start	Button_Start;//開始按鈕 by17
+		bool			buliding = 0;//防禦塔建造中 by17
 		//bool			ifRun;		//1 = 執行,0 = 暫停 by17
 	};
 
