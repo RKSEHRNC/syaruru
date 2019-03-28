@@ -52,6 +52,16 @@ namespace game_framework {
 		AUDIO_LAKE,				// 1
 		AUDIO_NTUT				// 2
 	};
+
+	////////////////////////
+	// 時間暫停! by17
+	///////////////////////
+
+	class Timer {
+	public:
+		bool ifRun = 0;
+	};
+
 	//////////////////////////////////////
 	// 建立敵人一號的物件 by17
 	//////////////////////////////////////
@@ -59,7 +69,7 @@ namespace game_framework {
 	public:
 		Enemy01();
 		void LoadBitmap();
-		void OnMove();
+		void OnMove(Timer t);
 		void OnShow();
 	private:
 		CMovingBitmap  pic;
@@ -72,7 +82,7 @@ namespace game_framework {
 
 	class Ballitsa {
 	public:
-		Ballitsa();
+		Ballitsa(CPoint p);
 		bool state = 0; //0 = 建造中, 1 = 建造完成
 		void LoadBitmap();
 		void OnShow();
@@ -120,6 +130,7 @@ namespace game_framework {
 		
 	};
 
+
 	
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
@@ -155,8 +166,7 @@ namespace game_framework {
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		bool Onclick(CPoint p, int y);					//判斷點擊時的滑鼠位子
-		bool ChangeRun();								//變更暫停或執行
-		bool ifRun;										//1 = 執行,0 = 暫停 by17
+		Timer timer;
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -175,7 +185,7 @@ namespace game_framework {
 		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
 		Button_start	Button_Start;//開始按鈕 by17
 		bool			buliding = 0;//防禦塔建造中 by17
-		//bool			ifRun;		//1 = 執行,0 = 暫停 by17
+		
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

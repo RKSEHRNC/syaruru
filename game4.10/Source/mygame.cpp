@@ -191,94 +191,95 @@ Enemy01::Enemy01() {//建立
 	x = 47, y = -20, state = 1;
 }
 
-void Enemy01::OnMove() {//移動
-
-	if (state == 1) { //向下
-		if (y <= 122) y += 3;
-		else state = 2;
-	}
-	if (state == 2) { //向右
-		if (x <= 120) x += 3;
-		else state = 3;
-	}
-	if (state == 3) { //向上
-		if (y >= 48) y -= 3;
-		else state = 4;
-	}
-	if (state == 4) { //向右
-		if (x <= 407) x += 3;
-		else state = 5;
-	}
-	if (state == 5) { //向下
-		if (y <= 250) y += 3;
-		else state = 6;
-	}
-	if (state == 6) { //向左
-		if (x >= 305) x -= 3;
-		else state = 7;
-	}
-	if (state == 7) { //向下
-		if (y <= 365) y += 3;
-		else state = 8;
-	}
-	if (state == 8) { //向左
-		if (x >= 225) x -= 3;
-		else state = 9;
-	}
-	if (state == 9) { //向上
-		if (y >= 195) y -= 3;
-		else state = 10;
-	}
-	if (state == 10) { //向右
-		if (x <= 335) x += 3;
-		else state = 11;
-	}
-	if (state == 11) { //向上
-		if (y >= 120) y -= 3;
-		else state = 12;
-	}
-	if (state == 12) { //向左
-		if (x >= 170) x -= 3;
-		else state = 13;
-	}
-	if (state == 13) { //向下
-		if (y <= 195) y += 3;
-		else state = 14;
-	}
-	if (state == 14) { //向左
-		if (x >= 25) x -= 3;
-		else state = 15;
-	}
-	if (state == 15) { //向下
-		if (y <= 265) y += 3;
-		else state = 16;
-	}
-	if (state == 16) { //向右
-		if (x <= 145) x += 3;
-		else state = 17;
-	}
-	if (state == 17) { //向下
-		if (y <= 345) y += 3;
-		else state = 18;
-	}
-	if (state == 18) { //向左
-		if (x >= 20) x -= 3;
-		else state = 19;
-	}
-	if (state == 19) { //向下
-		if (y <= 440) y += 3;
-		else state = 20;
-	}
-	if (state == 20) { //向右
-		if (x <= 385) x += 3;
-		else state = 21;
-	}
-	if (state == 21) { //向上
-		if (y >= 330) y -= 3;
-		else state = 22;
-	}
-	if (state == 22) { //向右
-		if (x <= 500) x += 3;
+void Enemy01::OnMove(Timer t) {//移動
+	if (t.ifRun == 1) {
+		if (state == 1) { //向下
+			if (y <= 122) y += 3;
+			else state = 2;
+		}
+		if (state == 2) { //向右
+			if (x <= 120) x += 3;
+			else state = 3;
+		}
+		if (state == 3) { //向上
+			if (y >= 48) y -= 3;
+			else state = 4;
+		}
+		if (state == 4) { //向右
+			if (x <= 407) x += 3;
+			else state = 5;
+		}
+		if (state == 5) { //向下
+			if (y <= 250) y += 3;
+			else state = 6;
+		}
+		if (state == 6) { //向左
+			if (x >= 305) x -= 3;
+			else state = 7;
+		}
+		if (state == 7) { //向下
+			if (y <= 365) y += 3;
+			else state = 8;
+		}
+		if (state == 8) { //向左
+			if (x >= 225) x -= 3;
+			else state = 9;
+		}
+		if (state == 9) { //向上
+			if (y >= 195) y -= 3;
+			else state = 10;
+		}
+		if (state == 10) { //向右
+			if (x <= 335) x += 3;
+			else state = 11;
+		}
+		if (state == 11) { //向上
+			if (y >= 120) y -= 3;
+			else state = 12;
+		}
+		if (state == 12) { //向左
+			if (x >= 170) x -= 3;
+			else state = 13;
+		}
+		if (state == 13) { //向下
+			if (y <= 195) y += 3;
+			else state = 14;
+		}
+		if (state == 14) { //向左
+			if (x >= 25) x -= 3;
+			else state = 15;
+		}
+		if (state == 15) { //向下
+			if (y <= 265) y += 3;
+			else state = 16;
+		}
+		if (state == 16) { //向右
+			if (x <= 145) x += 3;
+			else state = 17;
+		}
+		if (state == 17) { //向下
+			if (y <= 345) y += 3;
+			else state = 18;
+		}
+		if (state == 18) { //向左
+			if (x >= 20) x -= 3;
+			else state = 19;
+		}
+		if (state == 19) { //向下
+			if (y <= 440) y += 3;
+			else state = 20;
+		}
+		if (state == 20) { //向右
+			if (x <= 385) x += 3;
+			else state = 21;
+		}
+		if (state == 21) { //向上
+			if (y >= 330) y -= 3;
+			else state = 22;
+		}
+		if (state == 22) { //向右
+			if (x <= 500) x += 3;
+		}
 	}
 }
 
@@ -295,9 +296,9 @@ void Enemy01::OnShow() {
 // 弩炮的物件 by17
 ///////////////////////////////////////////
 
-Ballitsa::Ballitsa() {
+Ballitsa::Ballitsa(CPoint p) {
 	pic.LoadBitmap("Bitmaps\\ballista.bmp", RGB(255, 255, 255));
-	//pic.SetTopLeft(p.x - 20, p.y - 19);
+	pic.SetTopLeft(p.x - 20, p.y - 19);
 }
 
 void Ballitsa::LoadBitmap() {
@@ -333,7 +334,7 @@ Button_ballitsa::Button_ballitsa(){
 }
 
 void Button_ballitsa::newballitsa(CPoint p) {
-	 ballitsa = new Ballitsa;
+	 ballitsa = new Ballitsa(p);
 }
 
 void Button_ballitsa::LoadBitmap() {
@@ -423,7 +424,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//
 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
 
-	enemy01.OnMove();
+	enemy01.OnMove(timer);
 
 
 	// 判斷擦子是否碰到球
@@ -461,7 +462,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//
 	// 開始載入資料
 	//
-	ifRun = 0; //開始時預設為暫停 by17
 	int i;
 	for (i = 0; i < NUMBALLS; i++)	
 		ball[i].LoadBitmap();								// 載入第i個球的圖形
@@ -524,10 +524,6 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingDown(false);
 }
 
-bool CGameStateRun::ChangeRun() { //改變狀態 by17
-	ifRun = !ifRun;
-	return ifRun;
-}
 
 
 bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定 by17
@@ -547,8 +543,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 		Button_Ballitsa.ballitsa->state = 1;
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
-		Button_Start.OnMove();
-		this->ChangeRun();
+		timer.ifRun = !(timer.ifRun);
 	} 
 	
 }
