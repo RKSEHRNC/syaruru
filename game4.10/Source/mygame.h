@@ -59,7 +59,7 @@ namespace game_framework {
 	public:
 		Enemy01();
 		void LoadBitmap();
-		void OnMove();
+		void OnMove(CGameStateRun G);
 		void OnShow();
 	private:
 		CMovingBitmap  pic;
@@ -95,8 +95,7 @@ namespace game_framework {
 		Button_start();
 		void LoadBitmap();
 		void OnShow();
-		void OnMove(int x, int y);
-		void Click();
+		void OnMove();
 	private:
 		CMovingBitmap pic;
 		int x, y;
@@ -138,6 +137,8 @@ namespace game_framework {
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		bool Onclick(CPoint p, int y);					//判斷點擊時的滑鼠位子
+		bool ChangeRun();								//變更暫停或執行
+		bool ifRun;										//1 = 執行,0 = 暫停 by17
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -151,9 +152,10 @@ namespace game_framework {
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
-		Enemy01 enemy01;			//敵人物件 by17
-		Button_ballitsa Button_Ballitsa;		//弩炮按鈕 by17
-		Button_start Button_Start;		//開始按鈕 by17
+		Enemy01			enemy01;	//敵人物件 by17
+		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
+		Button_start	Button_Start;//開始按鈕 by17
+		//bool			ifRun;		//1 = 執行,0 = 暫停 by17
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

@@ -191,7 +191,7 @@ Enemy01::Enemy01() {//建立
 	x = 47, y = -20, state = 1;
 }
 
-void Enemy01::OnMove() {//移動
+void Enemy01::OnMove(CGameStateRun G) {//移動
 
 	if (state == 1) { //向下
 		if (y <= 122) y += 3;
@@ -344,13 +344,9 @@ void Button_start::OnShow() {
 	pic.ShowBitmap();
 }
 
-void Button_start::OnMove(int x1, int y1) {
-	x = x1;
-	y = y1;
-}
+void Button_start::OnMove() {
+	x = x - 40;
 
-void Button_start::Click() {
-	x = x-40;
 }
 
 
@@ -441,6 +437,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//
 	// 開始載入資料
 	//
+	ifRun = 0; //開始時預設為暫停 by17
 	int i;
 	for (i = 0; i < NUMBALLS; i++)	
 		ball[i].LoadBitmap();								// 載入第i個球的圖形
@@ -503,7 +500,13 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingDown(false);
 }
 
-bool CGameStateRun::Onclick(CPoint p, int y) {
+bool CGameStateRun::ChangeRun() { //改變狀態
+	ifRun = !ifRun;
+	return ifRun;
+}
+
+
+bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定
 	HWND h = FindWindow(NULL, "game");
 	GetCursorPos(&p);
 	ScreenToClient(h, &p);
@@ -512,10 +515,10 @@ bool CGameStateRun::Onclick(CPoint p, int y) {
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下)
 {
-	if (Onclick(point, 400) == 1) {
-		Button_Start.Click();
-	}
-	
+	if (Onclick(point, 400) == 1) { //start
+		Button_Start.OnMove();
+		this->ChangeRun();
+	} 
 }
 
 
@@ -554,6 +557,7 @@ void CGameStateRun::OnShow()
 	Button_Ballitsa.OnShow();
 	Button_Start.OnShow();
 	//eraser.OnShow();
+	bball.OnShow();
 
 }
 }
