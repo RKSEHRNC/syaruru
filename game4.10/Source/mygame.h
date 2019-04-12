@@ -62,6 +62,8 @@ namespace game_framework {
 		bool ifRun = 0;
 	};
 
+	//class Ballitsa{};
+
 	//////////////////////////////////////
 	// 建立敵人一號的物件 by17
 	//////////////////////////////////////
@@ -76,20 +78,40 @@ namespace game_framework {
 		int x,y,state;
 	};
 
+	//////////////////////////////
+	// 子彈 by17
+	//////////////////////////////
+
+	class Arrow {
+	public:
+		Arrow(int bx, int by, CPoint p);
+		void LoadBitmap();
+		void OnMove();
+		void OnShow();
+		void Shoot(CPoint p);
+	private:
+		CMovingBitmap  pic;
+		int x, y;
+	};
+
+
+
 	///////////////////////////////
 	//建立弩炮物件 by17
 	///////////////////////////////
 
 	class Ballitsa {
 	public:
+		Arrow* arrow = NULL;
 		Ballitsa(CPoint p);
 		bool state = 0; //0 = 建造中, 1 = 建造完成
 		void LoadBitmap();
 		void OnShow();
 		void OnMove(CPoint p);
+		void Click(CPoint p);
 	private:
-		CMovingBitmap pic;
 		int x, y;
+		CMovingBitmap pic;
 	};
 
 	///////////////////////////////////

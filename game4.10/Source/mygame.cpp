@@ -55,6 +55,7 @@
 #include "Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
+#include <math.h>
 #include "audio.h"
 #include "gamelib.h"
 #include "mygame.h"
@@ -292,6 +293,31 @@ void Enemy01::OnShow() {
 	pic.ShowBitmap();
 }
 
+////////////////////////////
+// 子彈的物件 by17
+////////////////////////////
+
+Arrow::Arrow(int bx, int by, CPoint p) {
+	pic.LoadBitmap("Bitmaps\\arrow.bmp", RGB(255, 255, 255));
+	pic.SetTopLeft(bx - 20, by - 19);
+	Shoot(p);
+}
+void Arrow::OnShow() {
+	pic.ShowBitmap();
+}
+
+void Arrow::Shoot(CPoint p) {
+	double dis = sqrt(pow(p.x - x, 2) + pow(p.y - y, 2));
+	double px = (p.x - x) / dis;
+	double py = (p.y - y) / dis;
+	int a;
+	for (a = 0; a < 20; a++) {
+		x = x + int(px * 10);
+		y = y + int(py * 10);
+		pic.SetTopLeft(x, y);
+	}
+}
+
 ///////////////////////////////////////////
 // 弩炮的物件 by17
 ///////////////////////////////////////////
@@ -313,6 +339,9 @@ void Ballitsa::OnMove(CPoint p) {
 	pic.SetTopLeft(p.x - 20, p.y - 19);
 }
 
+void Ballitsa::Click(CPoint p) {
+	arrow = new Arrow(x,y,p);
+}
 
 ///////////////////////
 // button by17
@@ -535,6 +564,8 @@ bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定 by17
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下) by17
 {	
+	if (Button_Ballitsa.ballitsa != NULL && Button_Ballitsa.ballitsa->state == 1) Button_Ballitsa.ballitsa->Click(point);
+	
 	if (Onclick(point, 50) == 1) { //弩炮
 		Button_Ballitsa.newballitsa(point);
 		buliding = 1;
@@ -583,7 +614,10 @@ void CGameStateRun::OnShow()
 	menu.ShowBitmap();
 	Button_Ballitsa.OnShow();
 	Button_Start.OnShow();
-	if(Button_Ballitsa.ballitsa != NULL ) Button_Ballitsa.ballitsa->OnShow();
+	if (Button_Ballitsa.ballitsa != NULL) {
+		Button_Ballitsa.ballitsa->OnShow();
+		if (Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
+	}
 	//ballitsa.OnShow();
 	//eraser.OnShow();
 	//bball.OnShow();

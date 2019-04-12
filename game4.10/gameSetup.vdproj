@@ -575,7 +575,7 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Game Framework Sample Program 4.8"
-        "ProductCode" = "8:{A168951B-B5D8-468C-963E-51A317A3A0BA}"
+        "ProductCode" = "8:{A3FFBFBA-513F-41BD-9697-3E892644DDBD}"
         "PackageCode" = "8:{447C7F03-80C4-4AC8-A097-D983BD367885}"
         "UpgradeCode" = "8:{56864DC0-362A-4E4F-BBE7-BD7B0F1DD0F9}"
         "AspNetVersion" = "8:4.0.30319.0"
