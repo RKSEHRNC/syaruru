@@ -86,12 +86,13 @@ namespace game_framework {
 	public:
 		Arrow(int bx, int by, CPoint p);
 		void LoadBitmap();
-		void OnMove();
+		void OnMove(Timer t);
 		void OnShow();
 		void Shoot(CPoint p);
 	private:
 		CMovingBitmap  pic;
 		int x, y;
+		double px, py, dis;
 	};
 
 

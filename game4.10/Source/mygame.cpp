@@ -299,23 +299,26 @@ void Enemy01::OnShow() {
 
 Arrow::Arrow(int bx, int by, CPoint p) {
 	pic.LoadBitmap("Bitmaps\\arrow.bmp", RGB(255, 255, 255));
-	pic.SetTopLeft(bx - 20, by - 19);
+	x = 20, y = 20;
 	Shoot(p);
 }
 void Arrow::OnShow() {
+	pic.SetTopLeft(x, y);
 	pic.ShowBitmap();
 }
 
-void Arrow::Shoot(CPoint p) {
-	double dis = sqrt(pow(p.x - x, 2) + pow(p.y - y, 2));
-	double px = (p.x - x) / dis;
-	double py = (p.y - y) / dis;
-	int a;
-	for (a = 0; a < 20; a++) {
+void Arrow::OnMove(Timer t) {
+	if (t.ifRun == 1) {
 		x = x + int(px * 10);
 		y = y + int(py * 10);
-		pic.SetTopLeft(x, y);
+	//int(px * 10)
 	}
+}
+
+void Arrow::Shoot(CPoint p) {
+	dis = sqrt(pow(p.x - x, 2) + pow(p.y - y, 2));
+	px = (p.x - x) / dis;
+	py = (p.y - y) / dis;
 }
 
 ///////////////////////////////////////////
@@ -341,6 +344,7 @@ void Ballitsa::OnMove(CPoint p) {
 
 void Ballitsa::Click(CPoint p) {
 	arrow = new Arrow(x,y,p);
+	
 }
 
 ///////////////////////
@@ -441,9 +445,9 @@ void CGameStateRun::OnBeginState()
 	help.SetTopLeft(0, SIZE_Y - help.Height());			// 設定說明圖的起始座標
 	hits_left.SetInteger(HITS_LEFT);					// 指定剩下的撞擊數
 	hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
-	CAudio::Instance()->Play(AUDIO_LAKE, 0);			// 撥放 WAVE
-	CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
-	CAudio::Instance()->Play(AUDIO_NTUT, false);		// 撥放 MIDI
+	//CAudio::Instance()->Play(AUDIO_LAKE, 0);			// 撥放 WAVE
+	//CAudio::Instance()->Play(AUDIO_DING, false);		// 撥放 WAVE
+	//CAudio::Instance()->Play(AUDIO_NTUT, false);		// 撥放 MIDI
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -454,7 +458,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
 
 	enemy01.OnMove(timer);
-
+	if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
 
 	// 判斷擦子是否碰到球
 	//
@@ -570,7 +574,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 		Button_Ballitsa.newballitsa(point);
 		buliding = 1;
 	}
-	else if (buliding == 1&& point.x < 470) {
+	else if (buliding == 1&& point.x < 470) { //把防禦塔能不能蓋寫在這裡面 by 17
 		Button_Ballitsa.ballitsa->state = 1;
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
