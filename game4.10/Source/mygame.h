@@ -153,7 +153,15 @@ namespace game_framework {
 		
 	};
 
-
+	class Cant {
+	public:
+		void LoadBitmap();
+		void OnShow();
+		void OnMove(CPoint p);
+	private:
+		CMovingBitmap pic;
+		int x = 0, y = 0;
+	};
 	
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
@@ -204,10 +212,11 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 		Enemy01			enemy01;	//敵人物件 by17
-		//Ballitsa		ballitsa;	//弩炮 by17
+		Cant			cant;		//禁止符號 by17
 		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
 		Button_start	Button_Start;//開始按鈕 by17
 		bool			buliding = 0;//防禦塔建造中 by17
+		bool			cantbulid = 0;//這裡不能蓋 by17
 		
 	};
 

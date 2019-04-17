@@ -1,0 +1,69 @@
+diff a/game4.10/Source/mygame.cpp b/game4.10/Source/mygame.cpp	(rejected hunks)
+@@ -299,25 +299,28 @@
+ 
+ Arrow::Arrow(int bx, int by, CPoint p) {
+ 	pic.LoadBitmap("Bitmaps\\arrow.bmp", RGB(255, 255, 255));
+-	pic.SetTopLeft(bx - 20, by - 19);
++	x = 20, y = 20;
+ 	Shoot(p);
+ }
+ void Arrow::OnShow() {
++	pic.SetTopLeft(x, y);
+ 	pic.ShowBitmap();
+ }
+ 
+-void Arrow::Shoot(CPoint p) {
+-	double dis = sqrt(pow(p.x - x, 2) + pow(p.y - y, 2));
+-	double px = (p.x - x) / dis;
+-	double py = (p.y - y) / dis;
+-	int a;
+-	for (a = 0; a < 20; a++) {
++void Arrow::OnMove(Timer t) {
++	if (t.ifRun == 1) {
+ 		x = x + int(px * 10);
+ 		y = y + int(py * 10);
+-		pic.SetTopLeft(x, y);
++	//int(px * 10)
+ 	}
+ }
+ 
++void Arrow::Shoot(CPoint p) {
++	dis = sqrt(pow(p.x - x, 2) + pow(p.y - y, 2));
++	px = (p.x - x) / dis;
++	py = (p.y - y) / dis;
++}
++
+ ///////////////////////////////////////////
+ // ���������� by17
+ ///////////////////////////////////////////
+@@ -441,9 +445,9 @@
+ 	help.SetTopLeft(0, SIZE_Y - help.Height());			// �]�w�����Ϫ��_�l�y��
+ 	hits_left.SetInteger(HITS_LEFT);					// ���w�ѤU��������
+ 	hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// ���w�ѤU�����ƪ��y��
+-	CAudio::Instance()->Play(AUDIO_LAKE, 0);			// ���� WAVE
+-	CAudio::Instance()->Play(AUDIO_DING, false);		// ���� WAVE
+-	CAudio::Instance()->Play(AUDIO_NTUT, false);		// ���� MIDI
++	//CAudio::Instance()->Play(AUDIO_LAKE, 0);			// ���� WAVE
++	//CAudio::Instance()->Play(AUDIO_DING, false);		// ���� WAVE
++	//CAudio::Instance()->Play(AUDIO_NTUT, false);		// ���� MIDI
+ }
+ 
+ void CGameStateRun::OnMove()							// ���ʹC������
+@@ -454,7 +458,7 @@
+ 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
+ 
+ 	enemy01.OnMove(timer);
+-
++	if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
+ 
+ 	// �P�_���l�O�_�I��y
+ 	//
+@@ -570,7 +574,7 @@
+ 		Button_Ballitsa.newballitsa(point);
+ 		buliding = 1;
+ 	}
+-	else if (buliding == 1&& point.x < 470) {
++	else if (buliding == 1&& point.x < 470) { //�⨾�m��ण��\�g�b�o�̭� by 17
+ 		Button_Ballitsa.ballitsa->state = 1;
+ 	}
+ 	if (Onclick(point, 400) == 1) { //start / pause

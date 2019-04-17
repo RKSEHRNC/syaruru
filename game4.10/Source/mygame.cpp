@@ -379,11 +379,6 @@ void Button_ballitsa::OnShow() {
 	pic.ShowBitmap();
 }
 
-void Button_ballitsa::Click() {
-
-}
-
-
 //////////////////////////////////////////
 // 開始按鈕的物件 by17
 //////////////////////////////////////////
@@ -407,6 +402,22 @@ void Button_start::OnMove() {
 
 }
 
+///////////////////////////////////
+// cant
+///////////////////////////////////
+
+
+void Cant::LoadBitmap() {
+	pic.LoadBitmap("Bitmaps\\cant.bmp", RGB(255, 255, 255));
+}
+
+void Cant::OnShow() {
+	pic.ShowBitmap();
+}
+
+void Cant::OnMove(CPoint p) {
+	pic.SetTopLeft(p.x - 20, p.y - 19);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
@@ -516,6 +527,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	Button_Ballitsa.LoadBitmap();
 	Button_Start.LoadBitmap();
 	bball.LoadBitmap();										// 載入圖形
+	cant.LoadBitmap();
 	hits_left.LoadBitmap();									
 	CAudio::Instance()->Load(AUDIO_DING,  "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
 	CAudio::Instance()->Load(AUDIO_LAKE,  "sounds\\lake.mp3");	// 載入編號1的聲音lake.mp3
@@ -574,8 +586,9 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 		Button_Ballitsa.newballitsa(point);
 		buliding = 1;
 	}
-	else if (buliding == 1&& point.x < 470) { //把防禦塔能不能蓋寫在這裡面 by 17
+	else if (buliding == 1&& cantbulid==0) { //把防禦塔能不能蓋寫在這裡面 by 17
 		Button_Ballitsa.ballitsa->state = 1;
+		buliding = 0;
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
 		timer.ifRun = !(timer.ifRun);
@@ -586,10 +599,15 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作(移動) by17
 {
-	if(buliding==1 && Button_Ballitsa.ballitsa->state == 0) 	Button_Ballitsa.ballitsa->OnMove(point);
+	if (buliding == 1 && Button_Ballitsa.ballitsa->state == 0) {
+		Button_Ballitsa.ballitsa->OnMove(point);
+		cant.OnMove(point);
+	}
+	if (point.x > 470) { //把防禦塔能不能蓋寫在這裡面 by 17
+		cantbulid = 1;
+	}
+	else cantbulid = 0;
 } 
-
-
 
 
 void CGameStateRun::OnShow()
@@ -620,6 +638,7 @@ void CGameStateRun::OnShow()
 	Button_Start.OnShow();
 	if (Button_Ballitsa.ballitsa != NULL) {
 		Button_Ballitsa.ballitsa->OnShow();
+		if (cantbulid == 1 && buliding == 1) cant.OnShow();
 		if (Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
 	}
 	//ballitsa.OnShow();
