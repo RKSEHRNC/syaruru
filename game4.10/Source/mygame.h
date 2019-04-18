@@ -38,6 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include <vector>
 #include "CEraser.h"
 #include "CBall.h"
 #include "CBouncingBall.h"
@@ -103,7 +104,7 @@ namespace game_framework {
 
 	class Ballitsa {
 	public:
-		Arrow* arrow = NULL;
+		vector<Arrow> arrow;
 		Ballitsa(CPoint p);
 		bool state = 0; //0 = 建造中, 1 = 建造完成
 		void LoadBitmap();
@@ -129,7 +130,7 @@ namespace game_framework {
 
 	class Button_ballitsa : public Button { //弩炮按鈕
 	public:
-		Ballitsa *ballitsa = NULL;
+		vector<Ballitsa> ballitsa;
 		Button_ballitsa();
 		void newballitsa(CPoint p);
 		void LoadBitmap();

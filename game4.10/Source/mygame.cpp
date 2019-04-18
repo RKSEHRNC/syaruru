@@ -51,6 +51,7 @@
  *      1. Demo MP3 support: use lake.mp3 to replace lake.wav.
 */
 
+#include <vector>
 #include "stdafx.h"
 #include "Resource.h"
 #include <mmsystem.h>
@@ -311,7 +312,6 @@ void Arrow::OnMove(Timer t) {
 	if (t.ifRun == 1) {
 		x = x + int(px * 10);
 		y = y + int(py * 10);
-	//int(px * 10)
 	}
 }
 
@@ -343,7 +343,7 @@ void Ballitsa::OnMove(CPoint p) {
 }
 
 void Ballitsa::Click(CPoint p) {
-	arrow = new Arrow(x,y,p);
+	arrow.push_back(Arrow(x, y, p));
 	
 }
 
@@ -367,7 +367,7 @@ Button_ballitsa::Button_ballitsa(){
 }
 
 void Button_ballitsa::newballitsa(CPoint p) {
-	 ballitsa = new Ballitsa(p);
+	ballitsa.push_back(Ballitsa(p));
 }
 
 void Button_ballitsa::LoadBitmap() {
@@ -469,7 +469,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
 
 	enemy01.OnMove(timer);
-	if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
+	//if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
 
 	// 判斷擦子是否碰到球
 	//
@@ -580,14 +580,14 @@ bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定 by17
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下) by17
 {	
-	if (Button_Ballitsa.ballitsa != NULL && Button_Ballitsa.ballitsa->state == 1) Button_Ballitsa.ballitsa->Click(point);
+	if (Button_Ballitsa.ballitsa.size() != 0 && Button_Ballitsa.ballitsa.rbegin()->state == 1) Button_Ballitsa.ballitsa.rbegin()->Click(point);
 	
 	if (Onclick(point, 50) == 1) { //弩炮
 		Button_Ballitsa.newballitsa(point);
 		buliding = 1;
 	}
 	else if (buliding == 1&& cantbulid==0) { //把防禦塔能不能蓋寫在這裡面 by 17
-		Button_Ballitsa.ballitsa->state = 1;
+		Button_Ballitsa.ballitsa.rbegin()->state = 1;
 		buliding = 0;
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
@@ -599,8 +599,8 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作(移動) by17
 {
-	if (buliding == 1 && Button_Ballitsa.ballitsa->state == 0) {
-		Button_Ballitsa.ballitsa->OnMove(point);
+	if (buliding == 1 && Button_Ballitsa.ballitsa.rbegin()->state == 0) {
+		Button_Ballitsa.ballitsa.rbegin()->OnMove(point);
 		cant.OnMove(point);
 	}
 	if (point.x > 470) { //把防禦塔能不能蓋寫在這裡面 by 17
@@ -637,10 +637,14 @@ void CGameStateRun::OnShow()
 	menu.ShowBitmap();
 	Button_Ballitsa.OnShow();
 	Button_Start.OnShow();
-	if (Button_Ballitsa.ballitsa != NULL) {
-		Button_Ballitsa.ballitsa->OnShow();
+	if (Button_Ballitsa.ballitsa.size() != 0) {
+		//int a = 0;
+		for (int a = 0;a < int(Button_Ballitsa.ballitsa.size()); a++) {
+			Button_Ballitsa.ballitsa.at(a).OnShow();
+		}
+		Button_Ballitsa.ballitsa.rbegin()->OnShow();
 		if (cantbulid == 1 && buliding == 1) cant.OnShow();
-		if (Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
+		//if (Button_Ballitsa.ballitsa.rbegin()->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
 	}
 	//ballitsa.OnShow();
 	//eraser.OnShow();
