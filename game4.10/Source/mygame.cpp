@@ -189,8 +189,9 @@ void CGameStateOver::OnShow()
 // 這裡是敵人一號的程式碼 by17
 ///////////////////////////////////////////////
 
-Enemy01::Enemy01() {//建立
-	x = 47, y = -20, state = 1;
+Enemy01::Enemy01(int i) {//建立
+	x = 47, y = (-20 - i), state = 1;
+	pic.LoadBitmap("Bitmaps\\enemy01.bmp");
 }
 
 void Enemy01::OnMove(Timer t) {//移動
@@ -286,13 +287,26 @@ void Enemy01::OnMove(Timer t) {//移動
 }
 
 void Enemy01::LoadBitmap() {//載入圖像
-	pic.LoadBitmap("Bitmaps\\enemy01.bmp");
+	//pic.LoadBitmap("Bitmaps\\enemy01.bmp");
 }
 
 void Enemy01::OnShow() {
 	pic.SetTopLeft(x, y);
 	pic.ShowBitmap();
 }
+
+/////////////////////////////
+// 敵人生成系統 by17
+/////////////////////////////
+
+void EnemyCrafting::craft() {
+	int i = 0;
+	//enemy01.reserve(5);
+	for (int a = 0; a < 5; a++) enemy01.push_back(Enemy01(i)), i =+ 50;
+
+}
+
+
 
 ////////////////////////////
 // 子彈的物件 by17
@@ -467,8 +481,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 如果希望修改cursor的樣式，則將下面程式的commment取消即可
 	//
 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
-
-	enemy01.OnMove(timer);
+	if (ENC.enemy01.size() != 0) for (int a = 0; a < 5; a++) ENC.enemy01.at(a).OnMove(timer);
+	//int(ENC.enemy01.size())
 	//if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
 
 	// 判斷擦子是否碰到球
@@ -523,7 +537,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	help.LoadBitmap(IDB_HELP,RGB(255,255,255));				// 載入說明的圖形
 	corner.LoadBitmap(IDB_CORNER);							// 載入角落圖形
 	corner.ShowBitmap(background);							// 將corner貼到background
-	enemy01.LoadBitmap();
 	Button_Ballitsa.LoadBitmap();
 	Button_Start.LoadBitmap();
 	bball.LoadBitmap();										// 載入圖形
@@ -591,6 +604,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 		buliding = 0;
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
+		if (level == 0) level = 1, ENC.craft();
 		timer.ifRun = !(timer.ifRun);
 	} 
 	
@@ -623,8 +637,7 @@ void CGameStateRun::OnShow()
 	//
 	background.ShowBitmap();			// 貼上背景圖
 	hits_left.ShowBitmap();
-	enemy01.OnShow();
-	
+	if (ENC.enemy01.size() != 0) for(int a = 0; a < 5; a++) ENC.enemy01.at(a).OnShow();
 	//
 	//  貼上左上及右下角落的圖
 	//

@@ -54,7 +54,8 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
-	////////////////////////
+
+	///////////////////////
 	// 時間暫停! by17
 	///////////////////////
 
@@ -70,7 +71,7 @@ namespace game_framework {
 	//////////////////////////////////////
 	class Enemy01 {
 	public:
-		Enemy01();
+		Enemy01(int i);
 		void LoadBitmap();
 		void OnMove(Timer t);
 		void OnShow();
@@ -78,6 +79,21 @@ namespace game_framework {
 		CMovingBitmap  pic;
 		int x,y,state;
 	};
+
+
+	/////////////////////////
+	// 控制怪物生成 by 17
+	/////////////////////////
+
+	class EnemyCrafting {
+	public:
+		vector<Enemy01> enemy01;
+		void craft();
+
+
+	};
+
+
 
 	//////////////////////////////
 	// 子彈 by17
@@ -199,6 +215,7 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		bool Onclick(CPoint p, int y);					//判斷點擊時的滑鼠位子
 		Timer timer;
+		
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -212,13 +229,13 @@ namespace game_framework {
 		CEraser			eraser;		// 拍子
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
-		Enemy01			enemy01;	//敵人物件 by17
+		EnemyCrafting	ENC;		// 敵人生成系統 by17
 		Cant			cant;		//禁止符號 by17
 		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
 		Button_start	Button_Start;//開始按鈕 by17
 		bool			buliding = 0;//防禦塔建造中 by17
 		bool			cantbulid = 0;//這裡不能蓋 by17
-		
+		int				level = 0;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
