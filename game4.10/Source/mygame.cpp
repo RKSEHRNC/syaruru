@@ -302,7 +302,7 @@ void Enemy01::OnShow() {
 void EnemyCrafting::craft() {
 	int i = 0;
 	//enemy01.reserve(5);
-	for (int a = 0; a < 5; a++) enemy01.push_back(Enemy01(i)), i =+ 50;
+	for (int a = 0; a < 5; a++) enemy01.push_back(Enemy01(i)), i =+ 30;
 
 }
 
@@ -605,6 +605,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
 		if (level == 0) level = 1, ENC.craft();
+		//for (int a = 0; a < int(ENC.enemy01.size()); a++) Button_Start.OnMove();
 		timer.ifRun = !(timer.ifRun);
 	} 
 	
