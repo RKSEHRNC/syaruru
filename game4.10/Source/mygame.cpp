@@ -403,7 +403,7 @@ void Button_start::OnMove() {
 }
 
 ///////////////////////////////////
-// cant
+// cant      by17
 ///////////////////////////////////
 
 
@@ -416,7 +416,7 @@ void Cant::OnShow() {
 }
 
 void Cant::OnMove(CPoint p) {
-	pic.SetTopLeft(p.x - 20, p.y - 19);
+	pic.SetTopLeft(p.x - 25, p.y - 25);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -605,6 +605,7 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@(²¾°
 	}
 	if (point.x > 470) { //§â¨¾¿m¶ð¯à¤£¯à»\¼g¦b³o¸Ì­± by 17
 		cantbulid = 1;
+		cant.OnMove(point);
 	}
 	else cantbulid = 0;
 } 
