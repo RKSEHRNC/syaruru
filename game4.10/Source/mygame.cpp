@@ -606,7 +606,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@(
 		Button_Ballitsa.newballitsa(point);
 		buliding = 1;
 	}
-	else if (buliding == 1&& cantbulid==0) { //§â¨¾¿m¶ð¯à¤£¯à»\¼g¦b³o¸Ì­± by 17
+	else if (buliding == 1&& cantbulid==0) { 
 		Button_Ballitsa.ballitsa.rbegin()->state = 1;
 		buliding = 0;
 	}
@@ -625,9 +625,9 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@(²¾°
 		Button_Ballitsa.ballitsa.rbegin()->OnMove(point);
 		cant.OnMove(point);
 	}
-	if (point.x > 470) { //§â¨¾¿m¶ð¯à¤£¯à»\¼g¦b³o¸Ì­± by 17
-		cantbulid = 1;
-		cant.OnMove(point);
+	if (point.x > 470 || (point.x > 30 && point.x < 85 && point.y < 160)) { //§â¨¾¿m¶ð¯à¤£¯à»\¼g¦b³o¸Ì­± by 17
+			cantbulid = 1;
+			cant.OnMove(point);
 	}
 	else cantbulid = 0;
 } 
