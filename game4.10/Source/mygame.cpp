@@ -629,6 +629,27 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@(²¾°
 			cantbulid = 1;
 			cant.OnMove(point);
 	}
+	else if (point.x > 78 && point.x < 152 && point.y < 160 && point.y>116) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 111 && point.x < 152 && point.y < 157 && point.y>35) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 111 && point.x < 440 && point.y < 75 && point.y>35) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 400 && point.x < 440 && point.y < 284 && point.y>75) cantbulid = 1,cant.OnMove(point);
+	else if (point.x >294 && point.x < 440 && point.y < 286 && point.y>245) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 294 && point.x < 331 && point.y < 400 && point.y>286) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 215 && point.x < 331 && point.y < 400 && point.y>360) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 215 && point.x < 250 && point.y < 400 && point.y>185) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 215 && point.x < 369 && point.y < 224 && point.y>184) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 330 && point.x < 369 && point.y < 224 && point.y>107) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 159 && point.x < 369 && point.y < 148 && point.y>107) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 159 && point.x < 197 && point.y < 222 && point.y>107) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 10 && point.x < 197 && point.y < 224 && point.y>182) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 10 && point.x < 50 && point.y < 302 && point.y>184) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 10 && point.x < 176 && point.y < 303 && point.y>263) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 178 && point.x < 138 && point.y < 377 && point.y>263) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 8 && point.x < 177 && point.y < 377 && point.y>337) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 8 && point.x < 48 && point.y>337) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 10 && point.x < 416 && point.y>434) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 376 && point.x < 416 && point.y>317) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 376 && point.y < 358 && point.y>319) cantbulid = 1,cant.OnMove(point);
 	else cantbulid = 0;
 } 
 
@@ -661,12 +682,11 @@ void CGameStateRun::OnShow()
 	Button_Ballitsa.OnShow();
 	Button_Start.OnShow();
 	if (Button_Ballitsa.ballitsa.size() != 0) {
-		//int a = 0;
 		for (int a = 0;a < int(Button_Ballitsa.ballitsa.size()); a++) {
 			Button_Ballitsa.ballitsa.at(a).OnShow();
 		}
 		Button_Ballitsa.ballitsa.rbegin()->OnShow();
-		if (cantbulid == 1 && buliding == 1) cant.OnShow();
+		if (cantbulid == 1 && buliding == 1) cant.OnShow(); 
 		//if (Button_Ballitsa.ballitsa.rbegin()->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
 	}
 	//eraser.OnShow();

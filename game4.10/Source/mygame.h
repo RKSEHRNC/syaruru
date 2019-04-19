@@ -169,7 +169,7 @@ namespace game_framework {
 
 	class Cant {
 	public:
-		void LoadBitmap();
+		void LoadBitmap(); 
 		void OnShow();
 		void OnMove(CPoint p);
 	private:
