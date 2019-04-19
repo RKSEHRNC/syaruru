@@ -301,9 +301,10 @@ void Enemy01::OnShow() {
 
 void EnemyCrafting::craft() {
 	int i = 0;
-	//enemy01.reserve(5);
-	for (int a = 0; a < 5; a++) enemy01.push_back(Enemy01(i)), i =+ 30;
-
+	for (int a = 0; a < 5; a++) {
+		enemy01.push_back(Enemy01(i));
+		i = i +30;
+	}
 }
 
 
@@ -359,6 +360,10 @@ void Ballitsa::OnMove(CPoint p) {
 void Ballitsa::Click(CPoint p) {
 	arrow.push_back(Arrow(x, y, p));
 	
+}
+
+void Ballitsa::EnemySeraching(Enemy01 en) {
+
 }
 
 ///////////////////////
@@ -481,7 +486,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 如果希望修改cursor的樣式，則將下面程式的commment取消即可
 	//
 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
-	if (ENC.enemy01.size() != 0) for (int a = 0; a < 5; a++) ENC.enemy01.at(a).OnMove(timer);
+	if (ENC.enemy01.size() != 0) {
+		for (int a = 0; a < 5; a++) ENC.enemy01.at(a).OnMove(timer);
+	}
 	//int(ENC.enemy01.size())
 	//if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
 
@@ -604,9 +611,9 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(
 		buliding = 0;
 	}
 	if (Onclick(point, 400) == 1) { //start / pause
+		timer.ifRun = !(timer.ifRun);
 		if (level == 0) level = 1, ENC.craft();
 		//for (int a = 0; a < int(ENC.enemy01.size()); a++) Button_Start.OnMove();
-		timer.ifRun = !(timer.ifRun);
 	} 
 	
 }
@@ -638,7 +645,9 @@ void CGameStateRun::OnShow()
 	//
 	background.ShowBitmap();			// 貼上背景圖
 	hits_left.ShowBitmap();
-	if (ENC.enemy01.size() != 0) for(int a = 0; a < 5; a++) ENC.enemy01.at(a).OnShow();
+	if (ENC.enemy01.size() != 0){
+		for (int a = 0; a < 5; a++) ENC.enemy01.at(a).OnShow();
+	}
 	//
 	//  貼上左上及右下角落的圖
 	//
@@ -660,7 +669,6 @@ void CGameStateRun::OnShow()
 		if (cantbulid == 1 && buliding == 1) cant.OnShow();
 		//if (Button_Ballitsa.ballitsa.rbegin()->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
 	}
-	//ballitsa.OnShow();
 	//eraser.OnShow();
 	//bball.OnShow();
 

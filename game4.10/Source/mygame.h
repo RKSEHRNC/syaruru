@@ -89,11 +89,7 @@ namespace game_framework {
 	public:
 		vector<Enemy01> enemy01;
 		void craft();
-
-
 	};
-
-
 
 	//////////////////////////////
 	// ¤l¼u by17
@@ -127,6 +123,7 @@ namespace game_framework {
 		void OnShow();
 		void OnMove(CPoint p);
 		void Click(CPoint p);
+		void EnemySeraching(Enemy01 en);
 	private:
 		int x, y;
 		CMovingBitmap pic;
