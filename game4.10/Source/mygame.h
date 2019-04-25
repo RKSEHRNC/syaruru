@@ -71,10 +71,13 @@ namespace game_framework {
 	//////////////////////////////////////
 	class Enemy01 {
 	public:
+		Enemy01();
 		Enemy01(int i);
 		void LoadBitmap();
 		void OnMove(Timer t);
 		void OnShow();
+		int Getmidx();
+		int Getmidy();
 	private:
 		CMovingBitmap  pic;
 		int x,y,state;
@@ -97,8 +100,7 @@ namespace game_framework {
 
 	class Arrow {
 	public:
-		Arrow(int bx, int by, CPoint p);
-		void LoadBitmap();
+		Arrow(int bx, int by, Enemy01* EN, double distence);
 		void OnMove(Timer t);
 		void OnShow();
 		void Shoot(CPoint p);
@@ -106,6 +108,7 @@ namespace game_framework {
 		CMovingBitmap  pic;
 		int x, y;
 		double px, py, dis;
+		Enemy01 en;
 	};
 
 
@@ -122,10 +125,12 @@ namespace game_framework {
 		void LoadBitmap();
 		void OnShow();
 		void OnMove(CPoint p);
-		void Click(CPoint p);
 		void EnemySeraching(Enemy01 en);
+		double distence;
+		int colddown;
 	private:
 		int x, y;
+		int range;
 		CMovingBitmap pic;
 	};
 

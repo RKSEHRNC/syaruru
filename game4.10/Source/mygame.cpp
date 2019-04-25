@@ -189,6 +189,10 @@ void CGameStateOver::OnShow()
 // 這裡是敵人一號的程式碼 by17
 ///////////////////////////////////////////////
 
+Enemy01::Enemy01() {
+	x = 0, y = 0;
+}
+
 Enemy01::Enemy01(int i) {//建立
 	x = 47, y = (-20 - i), state = 1;
 	pic.LoadBitmap("Bitmaps\\enemy01.bmp");
@@ -286,13 +290,17 @@ void Enemy01::OnMove(Timer t) {//移動
 	}
 }
 
-void Enemy01::LoadBitmap() {//載入圖像
-	//pic.LoadBitmap("Bitmaps\\enemy01.bmp");
-}
-
 void Enemy01::OnShow() {
 	pic.SetTopLeft(x, y);
 	pic.ShowBitmap();
+}
+
+int Enemy01::Getmidx() {
+	return x + 10;
+}
+
+int Enemy01::Getmidy() {
+	return y + 10;
 }
 
 /////////////////////////////
@@ -307,16 +315,16 @@ void EnemyCrafting::craft() {
 	}
 }
 
-
-
 ////////////////////////////
 // 子彈的物件 by17
 ////////////////////////////
 
-Arrow::Arrow(int bx, int by, CPoint p) {
+Arrow::Arrow(int bx, int by, Enemy01* EN,double distence) {
 	pic.LoadBitmap("Bitmaps\\arrow.bmp", RGB(255, 255, 255));
-	x = 20, y = 20;
-	Shoot(p);
+	x = bx + 15, y = by + 5, dis = distence;
+	en = *EN;
+	px = (en.Getmidx - x) / dis;
+	py = (en.Getmidy - y) / dis;
 }
 void Arrow::OnShow() {
 	pic.SetTopLeft(x, y);
@@ -330,12 +338,6 @@ void Arrow::OnMove(Timer t) {
 	}
 }
 
-void Arrow::Shoot(CPoint p) {
-	dis = sqrt(pow(p.x - x, 2) + pow(p.y - y, 2));
-	px = (p.x - x) / dis;
-	py = (p.y - y) / dis;
-}
-
 ///////////////////////////////////////////
 // 弩炮的物件 by17
 ///////////////////////////////////////////
@@ -343,6 +345,8 @@ void Arrow::Shoot(CPoint p) {
 Ballitsa::Ballitsa(CPoint p) {
 	pic.LoadBitmap("Bitmaps\\ballista.bmp", RGB(255, 255, 255));
 	pic.SetTopLeft(p.x - 20, p.y - 19);
+	colddown = 0;
+	range = 50;
 }
 
 void Ballitsa::LoadBitmap() {
@@ -357,12 +361,14 @@ void Ballitsa::OnMove(CPoint p) {
 	pic.SetTopLeft(p.x - 20, p.y - 19);
 }
 
-void Ballitsa::Click(CPoint p) {
-	arrow.push_back(Arrow(x, y, p));
-	
-}
-
 void Ballitsa::EnemySeraching(Enemy01 en) {
+	if (colddown == 0) {
+		distence = sqrt(pow(en.Getmidx - (x + 20), 2) + pow(en.Getmidy - (y + 19), 2));
+		if (distence < range) {
+			arrow.push_back(Arrow(x, y, &en, distence));
+			colddown = 30;
+		}
+	}
 
 }
 
@@ -512,8 +518,20 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
 	if (ENC.enemy01.size() != 0) {
 		for (int a = 0; a < 5; a++) ENC.enemy01.at(a).OnMove(timer);
+		if (Button_Ballitsa.ballitsa.size() != 0) {
+			for (int a = 0; a < Button_Ballitsa.ballitsa.size(); a++) {
+				for (int b = 0; b < ENC.enemy01.size(); b++) {
+					Button_Ballitsa.ballitsa.at(a).EnemySeraching(ENC.enemy01.at(b));
+				}
+			}
+		}
 	}
-	//int(ENC.enemy01.size())
+	if (Button_Ballitsa.ballitsa.size() != 0) {
+		for (int a = 0; a < Button_Ballitsa.ballitsa.size(); a++) {
+			if (Button_Ballitsa.ballitsa.at(a).colddown > 0) Button_Ballitsa.ballitsa.at(a).colddown -= 1;
+		}
+	}
+
 	//if (Button_Ballitsa.ballitsa!=NULL && Button_Ballitsa.ballitsa->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnMove(timer);
 
 	// 判斷擦子是否碰到球
@@ -627,7 +645,7 @@ bool CGameStateRun::Onclick(CPoint p, int y) { //點擊判定 by17
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作(左鍵按下) by17
 {	
-	if (Button_Ballitsa.ballitsa.size() != 0 && Button_Ballitsa.ballitsa.rbegin()->state == 1) Button_Ballitsa.ballitsa.rbegin()->Click(point);
+	//if (Button_Ballitsa.ballitsa.size() != 0 && Button_Ballitsa.ballitsa.rbegin()->state == 1) Button_Ballitsa.ballitsa.rbegin()->Click(point);
 	
 	if (Onclick(point, 50) == 1) { //弩炮
 		Button_Ballitsa.newballitsa(point);
