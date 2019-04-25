@@ -135,8 +135,12 @@ namespace game_framework {
 
 	class Button {
 	public:
+		Button();
 		int getX();
 		int getY();
+		void OnShow();
+		void Set(char* f);
+		CMovingBitmap pic;
 	private:
 		int x, y;
 	};
@@ -148,14 +152,12 @@ namespace game_framework {
 		void newballitsa(CPoint p);
 		void LoadBitmap();
 		void OnShow();
-		void Click();
-		
 	private:
 		CMovingBitmap pic;
 		int x = 500, y = 50;
 	};
 
-	class Button_start : public Button { //開始按鈕
+/*	class Button_start : public Button { //開始按鈕
 	public:
 		Button_start();
 		void LoadBitmap();
@@ -164,8 +166,7 @@ namespace game_framework {
 	private:
 		CMovingBitmap pic;
 		int x, y;
-		
-	};
+	};*/
 
 	class Cant {
 	public:
@@ -174,7 +175,17 @@ namespace game_framework {
 		void OnMove(CPoint p);
 	private:
 		CMovingBitmap pic;
-		int x = 0, y = 0;
+		int x, y;
+	};
+
+	class Range {
+	public:
+		void LoadBitmap();
+		void OnShow();
+		void OnMove(CPoint p);
+	private:
+		CMovingBitmap pic;
+		int x, y;
 	};
 	
 	/////////////////////////////////////////////////////////////////////////////
@@ -227,9 +238,12 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 		EnemyCrafting	ENC;		// 敵人生成系統 by17
-		Cant			cant;		//禁止符號 by17
+		Cant			cant;		// 禁止符號 by17
+		Range			range;		// 射程標示 by17
 		Button_ballitsa Button_Ballitsa;//弩炮按鈕 by17
-		Button_start	Button_Start;//開始按鈕 by17
+		Button			Button_Start; //開始按鈕 by17
+		Button			Button_Pause; //暫停按鈕 by17
+		Button			Button_Cannel; //取消按鈕 by17
 		bool			buliding = 0;//防禦塔建造中 by17
 		bool			cantbulid = 0;//這裡不能蓋 by17
 		int				level = 0;

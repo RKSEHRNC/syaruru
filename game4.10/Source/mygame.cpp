@@ -369,6 +369,11 @@ void Ballitsa::EnemySeraching(Enemy01 en) {
 ///////////////////////
 // button by17
 ///////////////////////
+Button::Button() {
+	x = 500;
+	y = 400;
+}
+
 int Button::getX() {
 	return x;
 }
@@ -376,6 +381,16 @@ int Button::getX() {
 int Button::getY() {
 	return y;
 }
+
+void Button::OnShow() {
+	pic.SetTopLeft(x, y);
+	pic.ShowBitmap();
+}
+
+void Button::Set(char* f) {
+	pic.LoadBitmap(f);
+}
+
 
 
 //////////////////////////////////////////
@@ -399,27 +414,18 @@ void Button_ballitsa::OnShow() {
 }
 
 //////////////////////////////////////////
-// ¶}©l«ö¶sªºª«¥ó by17
+// «ö¶sªºª«¥ó by17
 //////////////////////////////////////////
 
-Button_start::Button_start() {
+/*Button_start::Button_start() {
 	x = 500;
 	y = 400;
 }
 
 void Button_start::LoadBitmap() {
 	pic.LoadBitmap("Bitmaps\\button_start.bmp");
-}
+}*/
 
-void Button_start::OnShow() {
-	pic.SetTopLeft(x, y);
-	pic.ShowBitmap();
-}
-
-void Button_start::OnMove() {
-	x = x - 40;
-
-}
 
 ///////////////////////////////////
 // cant      by17
@@ -437,6 +443,24 @@ void Cant::OnShow() {
 void Cant::OnMove(CPoint p) {
 	pic.SetTopLeft(p.x - 25, p.y - 25);
 }
+
+///////////////////////////////////
+// ®gµ{      by17
+///////////////////////////////////
+
+
+void Range::LoadBitmap() {
+	pic.LoadBitmap("Bitmaps\\range.bmp", RGB(255, 255, 255));
+}
+
+void Range::OnShow() {
+	pic.ShowBitmap();
+}
+
+void Range::OnMove(CPoint p) {
+	pic.SetTopLeft(p.x - 100, p.y - 100);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸°õ¦æª«¥ó¡A¥D­nªº¹CÀ¸µ{¦¡³£¦b³o¸Ì
@@ -545,9 +569,12 @@ void CGameStateRun::OnInit()  								// ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
 	corner.LoadBitmap(IDB_CORNER);							// ¸ü¤J¨¤¸¨¹Ï§Î
 	corner.ShowBitmap(background);							// ±Ncorner¶K¨ìbackground
 	Button_Ballitsa.LoadBitmap();
-	Button_Start.LoadBitmap();
+	Button_Start.Set("Bitmaps\\button_start.bmp");
+	Button_Pause.Set("Bitmaps\\button_pause.bmp");
+	Button_Cannel.Set("Bitmaps\\button_cannel.bmp");
 	bball.LoadBitmap();										// ¸ü¤J¹Ï§Î
 	cant.LoadBitmap();
+	range.LoadBitmap();
 	hits_left.LoadBitmap();									
 	CAudio::Instance()->Load(AUDIO_DING,  "sounds\\ding.wav");	// ¸ü¤J½s¸¹0ªºÁn­µding.wav
 	CAudio::Instance()->Load(AUDIO_LAKE,  "sounds\\lake.mp3");	// ¸ü¤J½s¸¹1ªºÁn­µlake.mp3
@@ -624,32 +651,33 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@(²¾°
 	if (buliding == 1 && Button_Ballitsa.ballitsa.rbegin()->state == 0) {
 		Button_Ballitsa.ballitsa.rbegin()->OnMove(point);
 		cant.OnMove(point);
+		range.OnMove(point);
 	}
 	if (point.x > 470 || (point.x > 30 && point.x < 85 && point.y < 160)) { //§â¨¾¿m¶ð¯à¤£¯à»\¼g¦b³o¸Ì­± by 17
 			cantbulid = 1;
 			cant.OnMove(point);
 	}
-	else if (point.x > 78 && point.x < 152 && point.y < 160 && point.y>116) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 111 && point.x < 152 && point.y < 157 && point.y>35) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 111 && point.x < 440 && point.y < 75 && point.y>35) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 400 && point.x < 440 && point.y < 284 && point.y>75) cantbulid = 1,cant.OnMove(point);
-	else if (point.x >294 && point.x < 440 && point.y < 286 && point.y>245) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 294 && point.x < 331 && point.y < 400 && point.y>286) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 215 && point.x < 331 && point.y < 400 && point.y>360) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 215 && point.x < 250 && point.y < 400 && point.y>185) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 215 && point.x < 369 && point.y < 224 && point.y>184) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 330 && point.x < 369 && point.y < 224 && point.y>107) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 159 && point.x < 369 && point.y < 148 && point.y>107) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 159 && point.x < 197 && point.y < 222 && point.y>107) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 10 && point.x < 197 && point.y < 224 && point.y>182) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 10 && point.x < 50 && point.y < 302 && point.y>184) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 10 && point.x < 176 && point.y < 303 && point.y>263) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 178 && point.x < 138 && point.y < 377 && point.y>263) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 8 && point.x < 177 && point.y < 377 && point.y>337) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 8 && point.x < 48 && point.y>337) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 10 && point.x < 416 && point.y>434) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 376 && point.x < 416 && point.y>317) cantbulid = 1,cant.OnMove(point);
-	else if (point.x > 376 && point.y < 358 && point.y>319) cantbulid = 1,cant.OnMove(point);
+	else if (point.x > 78 && point.x < 152 && point.y < 160 && point.y>116) cantbulid = 1;
+	else if (point.x > 111 && point.x < 152 && point.y < 157 && point.y>35) cantbulid = 1;
+	else if (point.x > 111 && point.x < 440 && point.y < 75 && point.y>35) cantbulid = 1;
+	else if (point.x > 400 && point.x < 440 && point.y < 284 && point.y>75) cantbulid = 1;
+	else if (point.x >294 && point.x < 440 && point.y < 286 && point.y>245) cantbulid = 1;
+	else if (point.x > 294 && point.x < 331 && point.y < 400 && point.y>286) cantbulid = 1;
+	else if (point.x > 215 && point.x < 331 && point.y < 400 && point.y>360) cantbulid = 1;
+	else if (point.x > 215 && point.x < 250 && point.y < 400 && point.y>185) cantbulid = 1;
+	else if (point.x > 215 && point.x < 369 && point.y < 224 && point.y>184) cantbulid = 1;
+	else if (point.x > 330 && point.x < 369 && point.y < 224 && point.y>107) cantbulid = 1;
+	else if (point.x > 159 && point.x < 369 && point.y < 148 && point.y>107) cantbulid = 1;
+	else if (point.x > 159 && point.x < 197 && point.y < 222 && point.y>107) cantbulid = 1;
+	else if (point.x > 10 && point.x < 197 && point.y < 224 && point.y>182) cantbulid = 1;
+	else if (point.x > 10 && point.x < 50 && point.y < 302 && point.y>184) cantbulid = 1;
+	else if (point.x > 10 && point.x < 176 && point.y < 303 && point.y>263) cantbulid = 1;
+	else if (point.x > 178 && point.x < 138 && point.y < 377 && point.y>263) cantbulid = 1;
+	else if (point.x > 8 && point.x < 177 && point.y < 377 && point.y>337) cantbulid = 1 ;
+	else if (point.x > 8 && point.x < 48 && point.y>337) cantbulid = 1;
+	else if (point.x > 10 && point.x < 416 && point.y>434) cantbulid = 1;
+	else if (point.x > 376 && point.x < 416 && point.y>317) cantbulid = 1;
+	else if (point.x > 376 && point.y < 358 && point.y>319) cantbulid = 1;
 	else cantbulid = 0;
 } 
 
@@ -680,13 +708,20 @@ void CGameStateRun::OnShow()
 	//  ¶K¤W¿ï³æ by17
 	menu.ShowBitmap();
 	Button_Ballitsa.OnShow();
-	Button_Start.OnShow();
+	if (buliding == 1) Button_Cannel.OnShow();
+	else if (timer.ifRun == 0) Button_Start.OnShow();
+	else if (timer.ifRun == 1) Button_Pause.OnShow();
+
+
 	if (Button_Ballitsa.ballitsa.size() != 0) {
 		for (int a = 0;a < int(Button_Ballitsa.ballitsa.size()); a++) {
 			Button_Ballitsa.ballitsa.at(a).OnShow();
 		}
 		Button_Ballitsa.ballitsa.rbegin()->OnShow();
-		if (cantbulid == 1 && buliding == 1) cant.OnShow(); 
+		if (buliding == 1) { 
+			if(cantbulid == 1) cant.OnShow();
+			else range.OnShow();
+		}
 		//if (Button_Ballitsa.ballitsa.rbegin()->arrow != NULL) Button_Ballitsa.ballitsa->arrow->OnShow();
 	}
 	//eraser.OnShow();
